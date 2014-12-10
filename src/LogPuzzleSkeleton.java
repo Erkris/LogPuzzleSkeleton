@@ -25,7 +25,7 @@ public class LogPuzzleSkeleton {
 		String base_url = extractBaseUrlFromFileName(filename);
 
 		//TODO: Regex pour extraire les bonnes url
-		Pattern urlPattern = Pattern.compile(".*(puzzle).*");
+		Pattern urlPattern = Pattern.compile("\".*(GET )(.*(puzzle).*)( HTTP).*\"");
 
 		List<URL> fullUrls = null;
 
@@ -62,10 +62,8 @@ public class LogPuzzleSkeleton {
 		List<String> urls = new ArrayList<String>();
 		//TODO: extraire les URL qui suivent le pattern
 		while ((line = f.readLine()) != null) {
-			Pattern patternURL = Pattern.compile(".*(GET ).*( HTTP).*");
-			Matcher matcherURL = patternURL.matcher(urlPattern.toString());
+			Matcher matcherURL = urlPattern.matcher(line);
 			String url = "";
-			System.out.println(line);
 			if (matcherURL.find()) {
 				url = matcherURL.group(2);
 			}
@@ -77,6 +75,7 @@ public class LogPuzzleSkeleton {
 
 	/*private static List<String> removeDuplicates(List<String> list) {
 		//TODO: supprimer les doublons
+		list =
 	}
 
 	private static void sortUrlList(List<String> urls) {
